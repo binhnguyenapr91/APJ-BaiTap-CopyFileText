@@ -1,33 +1,32 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+
 
 public class App {
 	
-	
 	public static void main(String[] args) throws IOException {
-		System.out.print(readFile("file/sourceFile.txt"));
+		copyFile("file\\sourceFile.txt","file\\destFile.txt");
 	}
-
-	private static String readFile(String sourcePath) throws FileNotFoundException, IOException {
-		StringBuilder sb = new StringBuilder();
-		File sourceFile = new File(sourcePath);
-		InputStream in = new FileInputStream(sourceFile);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 	
+	private static void copyFile(String sourcePath,String destPath) throws FileNotFoundException, IOException {
+		FileReader fr = new FileReader(sourcePath);
+		BufferedReader br = new BufferedReader(fr);
+		
+		FileWriter fw = new FileWriter(destPath);
+		BufferedWriter bw = new BufferedWriter(fw);
+		
 		String line;
-		while ((line = br.readLine()) != null) {
-			sb.append(line + System.lineSeparator());
+		while((line = br.readLine())!=null) {
+			System.out.println(line);
+			bw.write(line);
+			bw.write("\n");
+		
 		}
-		return sb.toString();
+		bw.close();
+		br.close();
 	}
 }
